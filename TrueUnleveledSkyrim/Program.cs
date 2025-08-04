@@ -1,24 +1,18 @@
 using System;
 using System.Threading.Tasks;
-
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Synthesis;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Plugins.Cache;
-
 using TrueUnleveledSkyrim.Config;
 using TrueUnleveledSkyrim.Patch;
-
 
 namespace TrueUnleveledSkyrim
 {
     public class Patcher
     {
         public static readonly Random Randomizer = new();
-#pragma warning disable CA2211
         public static Lazy<TUSConfig> ModSettings = null!;
-#pragma warning restore CA2211
-
         public static ILinkCache LinkCache { get; set; } = null!;
 
         public static async Task<int> Main(string[] args)
@@ -33,8 +27,8 @@ namespace TrueUnleveledSkyrim
         public static void RunPatch(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
             LinkCache = state.LoadOrder.PriorityOrder.ToImmutableLinkCache();
-
             TUSConstants.GetPaths(state);
+
             if (ModSettings.Value.UnlevelItems)
             {
                 LeveledItemsPatcher.PatchLVLI(state);
